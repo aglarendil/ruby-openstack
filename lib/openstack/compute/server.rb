@@ -85,6 +85,14 @@ module Compute
       true
     end
 
+    def migrate()
+      data = JSON.generate(:migrate => nil)
+      response = @compute.connection.csreq("POST",@svrmgmthost,"#{@svrmgmtpath}/servers/#{URI.encode(self.id.to_s)}/action",@svrmgmtport,@svrmgmtscheme,{'content-type' => 'application/json'},data)
+      OpenStack::Exception.raise_exception(response) unless response.code.match(/^20.$/)
+      true
+    end
+
+
     # Sends an API request to hard-reboot (power cycle) the server.  See the reboot method for more information.
     #
     # Returns true if the API call succeeds.
