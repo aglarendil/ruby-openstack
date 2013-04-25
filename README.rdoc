@@ -1,5 +1,7 @@
 = Ruby OpenStack
 
+== This gem is derivative of upstream gem ruby-openstack (https://github.com/ruby-openstack/ruby-openstack)
+
 == Description
 
 Ruby Openstack Compute, Object-Store, Block Storage and Network (Quantum) bindings for the OpenStack API.
