@@ -407,6 +407,22 @@ module Compute
       response = @connection.req("DELETE", "/servers/#{server_id}/os-volume_attachments/#{attachment_id}")
       true
     end
+
+    def list_services(options = {})
+      path = OpenStack.paginate(options).empty? ? "#{@connection.service_path}/os-services" : "#{@connection.service_path}/os-services#{OpenStack.paginate(options)}"
+      response = @connection.csreq("GET",@connection.service_host,path,@connection.service_port,@connection.service_scheme)
+#      OpenStack::Exception.raise_exception(response) unless response.code.match(/^20.$/)
+      OpenStack.symbolize_keys(JSON.parse(response.body)["services"])
+    end
+
+    alias :services :list_services
+
+    def get_service(host,service)
+      OpenStack::Compute::Service.new(self,host,service)
+    end
+    alias :service :get_service
+
+
   end
 end
 end
